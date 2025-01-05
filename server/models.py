@@ -6,7 +6,7 @@ from config import db, bcrypt
 
 # Models go here!
 class Traveler(db.Model, SerializerMixin):
-    __tablename__ = 'users'
+    __tablename__ = 'travelers'
 
     id = db.Column(db.Integer, primary_key = True)
     username = db.Column(db.String)
@@ -17,8 +17,8 @@ class Traveler(db.Model, SerializerMixin):
     favorite_season = db.Column(db.String)
 
     @hybrid_property
-    def _password_hash(self):
-        raise Exception('password cannot be viewed')
+    def password_hash(self):
+        raise Exception('Password cannot be viewed')
     
     @password_hash.setter
     def password_hash(self, password):
