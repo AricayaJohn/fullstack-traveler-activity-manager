@@ -1,10 +1,11 @@
+import React from 'react';
 
-function Home ({traveler}) {
-    if (traveler){
-        return <h1>Welcome, {traveler.username}!</h1>;
-    } else {
-        return <h1>please Login or Signup</h1>
-    }
+function Home() {
+    return (
+        <div>
+            <h1> Welcome to the Home Page </h1>
+            <p> This is your Dashboard.</p>
+        </div>
+    );
 }
-
 export default Home

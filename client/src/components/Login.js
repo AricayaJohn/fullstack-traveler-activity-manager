@@ -14,7 +14,7 @@ function Login () {
             body: JSON.stringify({ username, password})
         });
         if (response.ok){
-            const data = await response.json();
+            //const data = await response.json();
             history.push('/home');
         } else {
             alert('Unauthorized login');
@@ -30,7 +30,7 @@ function Login () {
                 type = "text" value = {password}
                 onChange = {(e) => setPassword(e.target.value)}
                 placeholder = "Password" required/>
-                <button type = "submit"></button>
+                <button type = "submit"> Submit </button>
             </form>
     );
 }
