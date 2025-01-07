@@ -18,13 +18,21 @@ def add_travelers():
 
 def add_destination():
     destination1 = Destination(name='Grand Canyon', transportation='Drive', country='USA', season='Summer')
-    destination2 = Destination(name='Great Wall of China', transportation='Airplain', country='China', season='Spring')
+    destination2 = Destination(name='Mt. Fuji', transportation='Airplaine', country='Japan', season='Winter')
 
     db.session.add_all([destination1, destination2])
     db.session.commit()
 
+def add_activities():
+    activity1 = Activity(activity_name='Hiking', difficulty='Moderate', season_for_activity='Summer', duration=5, price=100, traveler_id=1, destination_id=1)
+    activity2 = Activity(activity_name='Snowboarding', difficulty='Hard', season_for_activity='Winter', duration=7, price=250, traveler_id=2, destination_id=2)
+
+    db.session.add_all([activity1, activity2])
+    db.session.commit()
+
+
+
 if __name__ == '__main__':
-    fake = Faker()
+
     with app.app_context():
-        print("Starting seed...")
-        # Seed code goes here!
+        seed()
