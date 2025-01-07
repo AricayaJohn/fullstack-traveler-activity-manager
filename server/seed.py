@@ -30,7 +30,24 @@ def add_activities():
     db.session.add_all([activity1, activity2])
     db.session.commit()
 
+def seed():
+    print("clearing data")
+    clear_data()
 
+    print("seeding travelers...")
+    travelers = add_travelers()
+    db.session.add_all(travelers)
+    db.session.commit()
+
+    print("seeding destinations...")
+    destinations = add_destination()
+    db.session.add_all(destinations)
+    db.session.commit()
+
+    print("seeding activities...")
+    activities = add_activities()
+    db.session.add_all(activities)
+    db.session.commit()
 
 if __name__ == '__main__':
 
