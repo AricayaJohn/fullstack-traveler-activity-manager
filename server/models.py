@@ -16,7 +16,7 @@ class Destination(db.Model, SerializerMixin):
     country = db.Column(db.String)
     season = db.Column(db.String)
 
-    activities = relationship('Activity', backref='destination', cascade= 'all, delete-orphan')
+    activities = relationship('Activity', backref='destination', cascade='all, delete-orphan')
 
     serialize_rules = ('-activities.destination',)
 
@@ -25,6 +25,9 @@ class Destination(db.Model, SerializerMixin):
         if not name:
             raise ValueError('Destination name is required')
         return name
+
+    def __repr__(self):
+        return f'<Destination {self.id}: {self.name}>'
 
 class Traveler(db.Model, SerializerMixin):
     __tablename__ = 'travelers'
@@ -39,7 +42,7 @@ class Traveler(db.Model, SerializerMixin):
 
     activities = relationship('Activity', backref='traveler', cascade='all, delete-orphan')
 
-    serialize_rules = ('-activities.traveler,')
+    serialize_rules = ('-activities.traveler',)
 
     @validates('name')
     def validate_name(self, key, name):
@@ -47,7 +50,7 @@ class Traveler(db.Model, SerializerMixin):
             raise ValueError('Traveler name is required')
             return name
 
-    @hybrid_property
+    @property
     def password_hash(self):
         raise Exception('Password cannot be viewed')
     
@@ -75,15 +78,10 @@ class Activity(db.Model, SerializerMixin):
     traveler_id = db.Column(db.Integer, db.ForeignKey('travelers.id'), nullable=False)
     destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'), nullable=False)
 
-    traveler = db.relationship('Traveler', backref = db.backref('activities'))
-    destination = db.relationship('Destination', backref = db.backref('activities') )
+    serialize_rules = ('-destinations.activities','-traveler.activities')
 
     def __repr__(self):
         return f"<Activity (name = {self.activity_name}, price={self.price})>"
-
-    def __repr__(self):
-        return f'<Destination {self.id}: {self.name}>'
-
 
 
     

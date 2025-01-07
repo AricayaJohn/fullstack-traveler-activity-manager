@@ -10,8 +10,8 @@ def clear_data():
     db.session.commit()
 
 def add_travelers():
-    traveler1 = Traveler(username='john', password_hash = pass123, age=28, email='john@example.com', interests='Hiking', favorite_season='Summer' )
-    traveler2 = Traveler(username='jane', password_hash = pass456, age=24, email='jane@example.com', interest='Snowboarding', favorite_season='Winter')
+    traveler1 = Traveler(username='john', password_hash = 'pass123', age=28, email='john@example.com', interests='Hiking', favorite_season='Summer' )
+    traveler2 = Traveler(username='jane', password_hash = 'pass456', age=24, email='jane@example.com', interests='Snowboarding', favorite_season='Winter')
 
     db.session.add_all([traveler1, traveler2])
     db.session.commit()
@@ -35,7 +35,7 @@ def seed():
     clear_data()
 
     print("seeding travelers...")
-    add_travelers
+    add_travelers()
 
     print("seeding destinations...")
     add_destination()
