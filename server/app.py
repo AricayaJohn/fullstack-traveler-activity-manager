@@ -1,17 +1,11 @@
 #!/usr/bin/env python3
 
-# Remote library imports
 from flask import request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource
-
-# Local imports
 from config import app, db, api, bcrypt
-
-# Add your model imports
 from models import Traveler
 
-# Views go here!
 @app.route('/')
 def index():
     return '<h1>Project Server</h1>'
