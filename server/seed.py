@@ -16,7 +16,12 @@ def add_travelers():
     db.session.add_all([Traveler1, Traveler2])
     db.session.commit()
 
+def add_destination():
+    destination1 = Destination(name='Grand Canyon', transportation='Drive', country='USA', season='Summer')
+    destination2 = Destination(name='Great Wall of China', transportation='Airplain', country='China', season='Spring')
 
+    db.session.add_all([destination1, destination2])
+    db.session.commit()
 
 if __name__ == '__main__':
     fake = Faker()
