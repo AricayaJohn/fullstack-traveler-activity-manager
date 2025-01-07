@@ -10,15 +10,15 @@ def clear_data():
     db.session.commit()
 
 def add_travelers():
-    traveler1 = Traveler(username='john', password_hash = pass123, age=28, email='john@example.com', interest='Hiking', favorite_season='Summer' )
+    traveler1 = Traveler(username='john', password_hash = pass123, age=28, email='john@example.com', interests='Hiking', favorite_season='Summer' )
     traveler2 = Traveler(username='jane', password_hash = pass456, age=24, email='jane@example.com', interest='Snowboarding', favorite_season='Winter')
 
-    db.session.add_all([Traveler1, Traveler2])
+    db.session.add_all([traveler1, traveler2])
     db.session.commit()
 
 def add_destination():
     destination1 = Destination(name='Grand Canyon', transportation='Drive', country='USA', season='Summer')
-    destination2 = Destination(name='Mt. Fuji', transportation='Airplaine', country='Japan', season='Winter')
+    destination2 = Destination(name='Mt. Fuji', transportation='Airplane', country='Japan', season='Winter')
 
     db.session.add_all([destination1, destination2])
     db.session.commit()
@@ -35,19 +35,13 @@ def seed():
     clear_data()
 
     print("seeding travelers...")
-    travelers = add_travelers()
-    db.session.add_all(travelers)
-    db.session.commit()
+    add_travelers
 
     print("seeding destinations...")
-    destinations = add_destination()
-    db.session.add_all(destinations)
-    db.session.commit()
+    add_destination()
 
     print("seeding activities...")
-    activities = add_activities()
-    db.session.add_all(activities)
-    db.session.commit()
+    add_activities()
 
 if __name__ == '__main__':
 
