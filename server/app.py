@@ -24,6 +24,7 @@ class Signup(Resource):
         )
         db.session.add(traveler)
         db.session.commit()
+        session['traveler_id'] = traveler.id
         return traveler.to_dict(), 201
 
 api.add_resource(Signup, '/signup', endpoint='signup')
@@ -53,10 +54,12 @@ api.add_resource(ClearSession, '/clear', endpoint='clear')
 
 class CheckSession(Resource):
     def get(self):
-        if session.get('traveler_id'):
-            traveler = Traveler.query.filter(Traveler.id == session['traveler_id']).first()
-            return traveler.to_dict(), 200
-        return {}, 204
+        traveler_id = session.get('traveler_id')
+        if 'traveler_id':
+            traveler = Traveler.query.get(traveler_id)
+            if traveler:
+                return traveler.to_dict(), 200
+            return {}, 200
 
 api.add_resource(CheckSession, '/check_session', endpoint='check_session')
 
