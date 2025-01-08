@@ -12,7 +12,7 @@ function Login () {
             body: JSON.stringify({ username, password})
         }).then((r) => {
             if (r.ok){
-                r.json().then((traveler) => setUsername(traveler))
+                r.json().then((traveler) => setUsername(traveler));
             }
         });
     };
@@ -27,7 +27,7 @@ function Login () {
                     type = "password" value = {password}
                     onChange = {(e) => setPassword(e.target.value)}
                     placeholder = "Password" required/>
-                <button type = "submit"> Submit </button>
+                <button type = "submit"> Login </button>
                 </form>
         </div>
     );

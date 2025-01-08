@@ -1,46 +1,70 @@
 import React, {useState} from 'react';
-import {useHistory} from 'react-router-dom';
 
-function Signup() {
-    const [formData, setFormData] = useState({
-        username: '',
-        password: '',
-        age: '',
-        email: '',
-        interests: '',
-        favorite_season: ''
-    });
-    const history = useHistory();
+function Signup({setTraveler}) {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [passwordConfirmation, setPasswordConfirmation] = useState('');
+    const [email, setEmail] = useState('');
+    const [age, setAge] = useState('');
+    const [interests, setInterests] = useState('');
+    const [favoriteSeason, setFavoriteSeason] = useState('');
 
     const handleChange = (e) => {
-        const {name, value} = e.target
-        setFormData({ ...formData, [name]: value });
-    };
-
-    const handleSubmit = async(e) => {
-        e.preventDefault();
-        try {
-            const response = await fetch('/signup', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(formData)
-            });
-            if (response.ok) {
-                history.push('/login');
-            } else {
-                console.error('signup failed');
-            } 
-        }   catch (error) {
-                console.error('Error:', error);
+        const {name, value} = e.target;
+        switch(name){
+            case 'username':
+                setUsername(value);
+                break;
+            case 'password':
+                setPassword(value);
+                break;
+            case 'passwordConfirmation':
+                setPasswordConfirmation(value);
+                break;
+            case 'email':
+                setEmail(value);
+                break;
+            case 'age':
+                setAge(value);
+                break;
+            case 'interests':
+                setInterests(value);
+                break;
+            case 'favoriteSeason':
+                setFavoriteSeason(value);
+                break;
+            default:
+                break;
         }
-    };
+    }
+
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        fetch('/signup', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                username,
+                password,
+                password_confirmation: passwordConfirmation,
+                email,
+                age,
+                interests,
+                favorite_season: favoriteSeason,
+            }),
+        }).then((r) => {
+            if (r.ok) {
+                r.json().then((traveler) => setTraveler(traveler));
+            }
+        });
+    }
     return (
         <form onSubmit={handleSubmit}>
             <label>Username:
             <input 
                 type="text"
                 name="username"
-                value={formData.username}
+                value={username}
                 onChange={handleChange}
             />
             </label>
@@ -48,7 +72,7 @@ function Signup() {
             <input 
                 type="password"
                 name="password"
-                value={formData.password}
+                value={password}
                 onChange={handleChange}
             />
             </label>
@@ -56,7 +80,7 @@ function Signup() {
             <input 
                 type="number" 
                 name="age" 
-                value={formData.age}
+                value={age}
                 onChange={handleChange}
             />
             </label>
@@ -64,7 +88,7 @@ function Signup() {
             <input
                 type="email"
                 name="email"
-                value={formData.email}
+                value={email}
                 onChange={handleChange}
             />
             </label>
@@ -72,7 +96,7 @@ function Signup() {
             <input
                 type="text"
                 name="interests"
-                value={formData.interests}
+                value={interests}
                 onChange={handleChange}
             />
             </label>
@@ -80,7 +104,7 @@ function Signup() {
             <input
                 type="text"
                 name="favorite_season"
-                value={formData.favorite_season}
+                value={favoriteSeason}
                 onChange={handleChange}
             />
             </label>
@@ -88,5 +112,6 @@ function Signup() {
         </form>
     );
 }
+
 
 export default Signup;
