@@ -78,6 +78,7 @@ class Activity(db.Model, SerializerMixin):
     traveler_id = db.Column(db.Integer, db.ForeignKey('travelers.id'), nullable=False)
     destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'), nullable=False)
 
+    
     serialize_rules = ('-destinations.activities','-traveler.activities')
 
     def __repr__(self):

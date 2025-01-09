@@ -70,6 +70,15 @@ class Logout(Resource):
 
 api.add_resource(Logout, '/logout', endpoint='logout')
 
+class GetTravelerById(Resource):
+    def get(self, id):
+        traveler = db.session.get(Traveler, id)
+        if traveler:
+            return traveler.to_dict(), 200
+        return {'error': "Traveler not found"}, 400
+
+api.add_resource(GetTravelerById, '/traveler/<int:id>')
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
