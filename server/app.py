@@ -4,7 +4,7 @@ from flask import request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource
 from config import app, db, api, bcrypt
-from models import Traveler
+from models import Traveler, Activity
 
 @app.route('/')
 def index():
@@ -78,6 +78,15 @@ class GetTravelerById(Resource):
         return {'error': "Traveler not found"}, 400
 
 api.add_resource(GetTravelerById, '/traveler/<int:id>')
+
+class TravelerActivities(Resource):
+    def get(self, traveler_id):
+        activities = Activity.query.filter_by(traveler_id=traveler_id).all()
+        if activities:
+            return [activity.to_dict() for activity in activities], 200
+        return {'error': "Activities not found"}, 404
+
+api.add_resource(TravelerActivities, '/traveler/<int:traveler_id>/activities')
 
 
 if __name__ == '__main__':

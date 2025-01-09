@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import Home from "./Home";
 import Signup from "./Signup";
+import TravelerPage from "./Traveler_page";
 
 function App() {
   const [traveler, setTraveler] = useState(null);
@@ -41,6 +42,9 @@ function App() {
           </Route> 
           <Route path="/signup">
             <Signup setTraveler={setTraveler} />
+          </Route>
+          <Route path="/traveler/:id">
+            <TravelerPage/>
           </Route>
         </Switch>
       </main>
