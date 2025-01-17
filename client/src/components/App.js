@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link, Redirect } from "react-router-dom";
 import Home from "./Home";
 import Signup from "./Signup";
 import TravelerPage from "./Traveler_page";
@@ -9,6 +9,7 @@ import AddTripForm from "./AddTripForm";
 function App() {
   const [traveler, setTraveler] = useState(null);
   const [showSignup, setShowSignup] = useState(false);
+  const [redirectPath, setRedirectPath] = useState('');
 
   useEffect(() => {
     fetch("/check_session").then((r) => {
@@ -30,8 +31,13 @@ function App() {
     });
   }
 
+  const handleRedirect = (path) => {
+    setRedirectPath(path);
+  }
+
   return (
     <Router>
+      {redirectPath && <Redirect to={redirectPath} />}
       <main>
         <Switch>
           <Route path="/" exact> 
@@ -66,8 +72,8 @@ function App() {
             <TravelerPage setTraveler={setTraveler} />
           </Route>
 
-          <Route path="add-trip">
-            <AddTripForm traveler={traveler} onTripAdded={handleTripAdded} />
+          <Route path="/add-trip">
+            <AddTripForm traveler={traveler} onTripAdded={handleTripAdded} onRedirect={handleRedirect}/>
           </Route>
         </Switch>
       </main>

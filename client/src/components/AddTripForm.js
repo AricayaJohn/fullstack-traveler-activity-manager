@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-function AddTripForm({traveler, onTripAdded}) {
+function AddTripForm({traveler, onTripAdded, onRedirect}) {
     const [activityName, setActivityName] = useState('');
     const [difficulty, setDifficulty] = useState('');
     const [season, setSeason] = useState('');
@@ -27,16 +27,18 @@ function AddTripForm({traveler, onTripAdded}) {
                     transportation: transportation,
                     country: country
                 },
-                traveker_id:traveler.id,
+                traveler_id:traveler.id,
             }),
         }).then((r) => {
             if (r.ok) {
                 r.json().then((newTrip) => {
                     onTripAdded();
+                    onRedirect(`/traveler/${traveler.id}`);
                 });
             }
         });
     };
+
 
     return (
         <form onSubmit={handleSubmit}>
@@ -71,7 +73,7 @@ function AddTripForm({traveler, onTripAdded}) {
             </div>
             <div>
                 <label> Country: </label>
-                <input type="text" value={activityName} onChange={(e) => setCountry(e.target.value)} required />
+                <input type="text" value={country} onChange={(e) => setCountry(e.target.value)} required />
             </div>
             <button type="submit">Add Trip</button>
         </form>
