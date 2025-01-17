@@ -4,6 +4,7 @@ import Home from "./Home";
 import Signup from "./Signup";
 import TravelerPage from "./Traveler_page";
 import Login from "./Login"
+import AddTripForm from "./AddTripForm";
 
 function App() {
   const [traveler, setTraveler] = useState(null);
@@ -18,6 +19,16 @@ function App() {
       }
     });
   }, []);
+
+  const handleTripAdded = () => {
+    fetch(`/traveler/${traveler.id}/activities`).then((r) => {
+      if (r.ok) {
+        r.json().then((activities) => {
+          setTraveler((prevTraveler) => ({ ...prevTraveler, activities }));
+        });
+      }
+    });
+  }
 
   return (
     <Router>
@@ -53,6 +64,10 @@ function App() {
 
           <Route path="/traveler/:id">
             <TravelerPage setTraveler={setTraveler} />
+          </Route>
+
+          <Route path="add-trip">
+            <AddTripForm traveler={traveler} onTripAdded={handleTripAdded} />
           </Route>
         </Switch>
       </main>
