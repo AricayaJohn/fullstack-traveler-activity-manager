@@ -88,6 +88,49 @@ class TravelerActivities(Resource):
 
 api.add_resource(TravelerActivities, '/traveler/<int:traveler_id>/activities')
 
+class AddTrip(Resource):
+    def post(self):
+        data = request.get_json()
+        traveler_id = data['traveler_id']
+        activity_name = data['activity_name']
+        difficulty = data['difficulty']
+        season_for_activity = data ['season_for_activity']
+        duration = data['duration']
+        price = data['price']
+        destination_data = data['destination']
+
+        destination = Destination.query.filter_by(
+            name = destination_data['name'],
+            transportation = destination_data['transportation'],
+            country = destination_data['country']
+        ).first()
+
+        if not destination:
+            destination = Destination(
+            name = destination_data['name'],
+            transportation = destination_data['transportation'],
+            country = destination_data['country']                
+            )
+            db.session.add(destination)
+            db.session.commit()
+
+        activity = Activity(
+            activity_name = activity_name,
+            difficulty = difficulty,
+            season_for_activity = season_for_activity,
+            duration = duration, 
+            price = price,
+            traveler_id = traveler_id,
+            destination_id = destination.id
+        )
+
+        db.session.add(activity)
+        db.session.commit()
+
+        return activity.to_dict(), 201
+
+api.add_resource(AddTrip, '/add_trip', endpoint='add_trip')
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
