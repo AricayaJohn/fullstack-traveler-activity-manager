@@ -4,7 +4,7 @@ from flask import request, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_restful import Resource
 from config import app, db, api, bcrypt
-from models import Traveler, Activity
+from models import Traveler, Activity, Destination
 
 @app.route('/')
 def index():
