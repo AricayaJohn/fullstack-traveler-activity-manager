@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, Redirect } from 'react-router-dom';
 
 function TravelerPage({ setTraveler }) {
   const { id } = useParams();
   const [traveler, setTravelerData] = useState(null);
   const [activities, setActivities] = useState([]);
+  const [logout, setLogout] = useState(false);
 
   useEffect(() => {
     fetch(`/traveler/${id}`).then((r) => {
@@ -25,9 +26,14 @@ function TravelerPage({ setTraveler }) {
     fetch('/logout', { method: 'DELETE' }).then((r) => {
       if (r.ok) {
         setTraveler(null);
+        setLogout(true)
       }
     });
   };
+
+  if (logout) {
+    return <Redirect to="/" />
+  }
 
   if (!traveler) {
     return <div>Loading...</div>;
