@@ -24,6 +24,16 @@ function EditTripForm({ tripId, onRedirect }) {
             if (r.ok) {
                 onRedirect(`/traveler/${trip.traveler_id}`);
             }
-        })
-    }
+        });
+    };
+
+    const handleDelete = () => {
+        fetch(`/activities/{tripID}`, {
+            method: 'DELETE',
+        }).then((r) => {
+            if (r.ok) {
+                onRedirect(`/traveler/${trip.traveler_id}`);
+            }
+        });
+    };
 }
