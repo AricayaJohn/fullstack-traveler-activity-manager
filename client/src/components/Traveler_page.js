@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link, Redirect } from 'react-router-dom';
 
-function TravelerPage({ setTraveler }) {
+function TravelerPage({ setTraveler, onTripEdit }) {
   const { id } = useParams();
   const [traveler, setTravelerData] = useState(null);
   const [activities, setActivities] = useState([]);
@@ -46,7 +46,9 @@ function TravelerPage({ setTraveler }) {
       <ul>
         {activities.map((activity) => (
           <li key={activity.id}>
+            <Link to="/edit-trip" onClick={() => onTripEdit(activity.id)}>
             {activity.activity_name} at {activity.destination.name}, {activity.destination.country}
+            </Link>
           </li>
         ))}
       </ul>

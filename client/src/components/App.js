@@ -5,11 +5,13 @@ import Signup from "./Signup";
 import TravelerPage from "./Traveler_page";
 import Login from "./Login"
 import AddTripForm from "./AddTripForm";
+import EditTripForm from "./EditPage";
 
 function App() {
   const [traveler, setTraveler] = useState(null);
   const [showSignup, setShowSignup] = useState(false);
   const [redirectPath, setRedirectPath] = useState('');
+  const [selectedTripId, setSelectedTripId] = useState(null);
 
   useEffect(() => {
     fetch("/check_session").then((r) => {
@@ -33,6 +35,10 @@ function App() {
 
   const handleRedirect = (path) => {
     setRedirectPath(path);
+  }
+
+  const handleTripEdit = (tripId) => {
+    setSelectedTripId(tripId);
   }
 
   return (
@@ -74,6 +80,10 @@ function App() {
 
           <Route path="/add-trip">
             <AddTripForm traveler={traveler} onTripAdded={handleTripAdded} onRedirect={handleRedirect}/>
+          </Route>
+
+          <Route path="/edit-trip">
+              {selectedTripId && <EditTripForm tripId={selectedTripId} onRedirect={handleRedirect} />}
           </Route>
         </Switch>
       </main>
